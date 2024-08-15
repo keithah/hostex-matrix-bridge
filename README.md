@@ -103,37 +103,39 @@ namespaces:
 url: http://localhost:8080
 sender_localpart: hostexbot
 rate_limited: false
+```
 
 Make sure to replace example.com with your actual domain, and generate unique tokens for as_token and hs_token.
-#Running the Bridge
-##For Self-Hosted Synapse
+
+# Running the Bridge
+## For Self-Hosted Synapse
 
 Run the bridge using:
 python hostex_bridge.pyo
 
-##For beeper/bbctl
+## For beeper/bbctl
 The bridge should start automatically after registration. You can manage it using bbctl commands:
 bbctl bridge status hostex
 bbctl bridge stop hostex
 bbctl bridge start hostex
 
-#Usage
+# Usage
 Once the bridge is running and configured:
 
 Invite the bridge bot (e.g., @hostexbot:example.com) to a room.
 The bridge will create a room for each Hostex conversation.
 You can now send and receive messages between Matrix and Hostex.
 
-#Troubleshooting
+# Troubleshooting
 
 Check the bridge logs (console output or bridge.log) for any error messages.
 Ensure your Hostex API credentials are correct.
 Verify that the application service is properly registered with your homeserver.
 For beeper/bbctl setups, use bbctl bridge logs hostex to view logs.
 
-#Contributing
+# Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
-#Support
+# Support
 If you encounter any issues or have questions, please open an issue on the GitHub repository.
 
 
