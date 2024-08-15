@@ -1,0 +1,22 @@
+diff --git a/hostex_polling.py b/hostex_polling.py
+index 6be0ec4..8aa3c7d 100644
+--- a/hostex_polling.py
++++ b/hostex_polling.py
+@@ -23,7 +23,12 @@ class HostexPoller:
+                     conv_id = conversation['id']
+                     if conv_id in self.bridge.conversation_rooms:
+                         last_message_time = self.bridge.conversation_rooms[conv_id]['last_message_time']
+-                        messages = await self.bridge.hostex_api.get_conversation_messages(conv_id)
+-                        new_messages = [msg for msg in messages if datetime.fromisoformat(msg['created_at'].rstrip('Z')).replace(tzinfo=timezone.utc) > last_message_time]
+-                        for message in new_messages:
+-                            await self.bridge.message_handler.process_hostex_message(conv_id, message)
++                        if last_message_time:
++                            messages = await self.bridge.hostex_api.get_conversation_messages(conv_id)
++                            new_messages = [msg for msg in messages if datetime.fromisoformat(msg['created_at'].rstrip('Z')).replace(tzinfo=timezone.utc) > last_message_time]
++                            for message in new_messages:
++                                await self.bridge.message_handler.process_hostex_message(conv_id, message)
++                        else:
++                            # If last_message_time is None, process all messages
++                            messages = await self.bridge.hostex_api.get_conversation_messages(conv_id)
++                            for message in messages:
++                                await self.bridge.message_handler.process_hostex_message(conv_id, message)
