@@ -7,7 +7,7 @@ env/
 venv/
 *.log
 *.sqlite
-*.yaml
+*.yaml*
 *.db
 *.json
 bbctl
