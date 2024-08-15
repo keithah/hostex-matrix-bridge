@@ -1,6 +1,10 @@
 # Hostex Matrix Bridge
 
-This is a Matrix bridge for Hostex, allowing you to interact with Hostex conversations through Matrix. This bridge was developed using the mautrix framework and was written with the assistance of OpenAI's Claude AI.
+Hostex is a cloud-based short-term rental management software (PMS) that provides a broad range of features, automation tools, and seamless integration with popular booking platforms.
+
+This is a Matrix bridge for [Hostex](https://hostex.io), allowing you to interact with Hostex conversations through Matrix. I use it with Airbnb primarily.
+
+This bridge was developed using the mautrix framework and was written with the assistance of OpenAI's Claude AI.
 
 ## Credits and Licensing
 
