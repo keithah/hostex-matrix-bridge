@@ -46,7 +46,7 @@ class HostexBridgeCore:
 
         hostex_api_url = self.config["hostex.api_url"]
         hostex_token = self.config["hostex.token"]
-        self.hostex_api = HostexAPI(hostex_api_url, hostex_token)
+        self.hostex_api = HostexAPI(hostex_api_url, hostex_token, self.config)
 
         server_url = self.config["homeserver.address"]
         self.bot_mxid = UserID(f"@{registration['sender_localpart']}:{self.hs_domain}")

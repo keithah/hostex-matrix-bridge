@@ -1,0 +1,12 @@
+mautrix
+aiohttp
+PyYAML
+pytz
+asyncpg
+SQLAlchemy
+alembic
+markdown
+Pillow
+python-magic
+commonmark
+ruamel.yaml

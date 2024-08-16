@@ -13,17 +13,30 @@ logger = logging.getLogger(__name__)
 async def main():
     parser = argparse.ArgumentParser(description="Hostex Bridge")
     parser.add_argument("--debug", action="store_true", help="Enable debug logging")
+    parser.add_argument("--config", default="config.yaml", help="Path to the config file")
     args = parser.parse_args()
 
     log_level = logging.DEBUG if args.debug else logging.INFO
     logging.basicConfig(level=log_level, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-    config_path = os.path.expanduser("~/airbnb/bridge/config.yaml")
-    registration_path = os.path.expanduser("~/airbnb/bridge/registration.yaml")
-    db_path = os.path.expanduser("~/airbnb/bridge/hostex_bridge.db")
+    # Get the directory of the current script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct paths relative to the script directory
+    config_path = os.path.join(script_dir, args.config)
+    registration_path = os.path.join(script_dir, "registration.yaml")
+    db_path = os.path.join(script_dir, "hostex_bridge.db")
+
+    if not os.path.exists(config_path):
+        logger.error(f"Config file not found: {config_path}")
+        return
 
     config = Config(config_path, '')
     config.load()
+
+    if not os.path.exists(registration_path):
+        logger.error(f"Registration file not found: {registration_path}")
+        return
 
     with open(registration_path, "r") as registration_file:
         registration_data = yaml.safe_load(registration_file)

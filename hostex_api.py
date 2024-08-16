@@ -2,11 +2,12 @@ import aiohttp
 import logging
 from typing import List, Dict, Any
 from datetime import datetime, timezone
+import pytz
 
 logger = logging.getLogger(__name__)
 
 class HostexAPI:
-    def __init__(self, api_url: str, token: str):
+    def __init__(self, api_url: str, token: str, config):
         if not api_url:
             raise ValueError("Hostex API URL is required")
         if not token:
@@ -18,6 +19,8 @@ class HostexAPI:
             "Content-Type": "application/json"
         }
         self.log = logger
+        self.config = config
+        self.timezone = config.hostex_timezone
 
     async def _make_request(self, method: str, endpoint: str, params: Dict[str, Any] = None, data: Dict[str, Any] = None) -> Any:
         url = f"{self.api_url}/{endpoint}"
@@ -53,11 +56,12 @@ class HostexAPI:
             dt = datetime.fromisoformat(timestamp_str.rstrip('Z'))
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=timezone.utc)
-            self.log.debug(f"Parsed timestamp: {dt}")
-            return dt
+            local_dt = dt.astimezone(self.timezone)
+            self.log.debug(f"Parsed timestamp: {local_dt}")
+            return local_dt
         except Exception as e:
             self.log.error(f"Error parsing timestamp {timestamp_str}: {e}")
-            return datetime.now(timezone.utc)
+            return datetime.now(self.timezone)
 
     async def get_conversations(self, offset: int = 0, limit: int = 20) -> Dict[str, Any]:
         self.log.debug(f"Getting conversations with offset {offset} and limit {limit}")
