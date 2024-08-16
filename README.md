@@ -56,61 +56,6 @@ cp config.example.yaml config.yaml
 bbctl bridge add hostex /path/to/hostex-bridge/config.yaml
 bbctl bridge start hostex
 
-## Configuration Details
-
-### config.yaml
-
-```yaml
-homeserver:
- address: https://matrix.example.com
- domain: example.com
-
-user:
- user_id: "@hostex:example.com"
-
-hostex:
- api_url: https://api.hostex.com
- token: your_hostex_api_token
-
-appservice:
- address: http://localhost:8080
- hostname: 0.0.0.0
- port: 8080
- database: sqlite:///bridge.db
- id: hostex
- bot_username: hostexbot
- as_token: generate_a_random_token_here
- hs_token: generate_another_random_token_here
-
-bridge:
- username_template: "hostex_{userid}"
- displayname_template: "{displayname} (Hostex)"
-
-logging:
- console_log_level: DEBUG
- file_log_level: INFO
- file_log_path: bridge.log
-
-admin:
- user_id: "@admin:example.com"
-
-### registration.yaml (for self-hosted Synapse)
-id: hostex
-as_token: generate_a_random_token_here
-hs_token: generate_another_random_token_here
-namespaces:
-    users:
-        - exclusive: true
-          regex: "@hostex_.*:example\\.com"
-    aliases: []
-    rooms: []
-url: http://localhost:8080
-sender_localpart: hostexbot
-rate_limited: false
-```
-
-Make sure to replace example.com with your actual domain, and generate unique tokens for as_token and hs_token.
-
 # Running the Bridge
 ## For Self-Hosted Synapse
 
